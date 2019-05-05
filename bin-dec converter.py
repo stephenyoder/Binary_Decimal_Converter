@@ -40,9 +40,9 @@ def isDecimal(num):
     return True
 
 def hex2dec(hex):
-    hex = str(hex) #"A2B"
-    length = len(hex) #3
-    weight = 16**(length-1) #16*16
+    hex = str(hex)
+    length = len(hex)
+    weight = 16**(length-1)
     decimal = 0
     for val in hex:
         if val.isdigit():
