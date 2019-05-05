@@ -39,15 +39,39 @@ def isDecimal(num):
             return False
     return True
 
+def hex2dec(hex):
+    hex = str(hex) #"A2B"
+    length = len(hex) #3
+    weight = 16**(length-1) #16*16
+    decimal = 0
+    for val in hex:
+        if val.isdigit():
+            decimal = int(val) * weight + decimal
+        else:
+            decimal = getDecimalValFromHex(val) * weight + decimal
+        weight /= 16
+    return int(decimal)
+
+def is_hex(s):
+    try:
+        int(s, 16)
+        return True
+    except ValueError:
+        return False
+
+def getDecimalValFromHex(num):
+    hexDict ={'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
+    return(hexDict[num.upper()])
+
 def main():
     exit = 0
     while exit != 1:
         try:
-            mode = int(input('This program converts binary to decimal or decimal to binary! Press the number for what conversion you would like \n 1:Bin-Dec; 2:Dec-Bin \n'))
+            mode = int(input('This program converts binary to decimal or decimal to binary! Press the number for what conversion you would like \n 1:Bin-Dec; 2:Dec-Bin 3:Hex-dec \n'))
         except ValueError:
             print("Not a number")
 
-        if mode != 1 and mode != 2:
+        if mode != 1 and mode != 2 and mode != 3:
             print ("Please enter 1 or 2 next time")
         else:
             if mode == 1:
@@ -62,6 +86,12 @@ def main():
                     print(dec2bin(num_input))
                 else:
                     print("Invalid number")
+            elif mode == 3:
+                num_input = input("Enter your hexidecimal number \n")
+                if is_hex(num_input):
+                    print(hex2dec(num_input))
+                else:
+                    print("Not a hexadecimal number")
         exit_status = (input("Enter 1 if you would like to do another conversion or any other key to exit \n"))
         if exit_status != "1":
             exit = 1
