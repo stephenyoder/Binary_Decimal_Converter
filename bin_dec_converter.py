@@ -18,8 +18,10 @@ def bin2dec(bin):
     return int(decimal)
 
 def dec2bin(dec):
-    binary = ""
     dec=int(dec)
+    if dec == 0:
+        return 0
+    binary = ""
     while dec != 0:
         r = dec % 2
         binary+=str(r)
@@ -88,10 +90,13 @@ def main():
                     print("Invalid number")
             elif mode == 3:
                 num_input = input("Enter your hexidecimal number \n")
-                if is_hex(num_input):
-                    print(hex2dec(num_input))
-                else:
+                if len(num_input) == 0 or is_hex(num_input) is False:
                     print("Not a hexadecimal number")
+                elif str(num_input[0]) == '-':
+                    print("Negative numbers are not supported")
+                else:
+                    print(hex2dec(num_input))
+
         exit_status = (input("Enter 1 if you would like to do another conversion or any other key to exit \n"))
         if exit_status != "1":
             exit = 1
