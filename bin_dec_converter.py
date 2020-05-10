@@ -30,12 +30,16 @@ def dec2bin(dec):
     return binary[::-1]
 
 def isBinary(num):
+    if len(num)<1:
+        return False
     for bit in str(num):
         if bit != "0" and bit != "1":
             return False
     return True
 
 def isDecimal(num):
+    if len(num)<1:
+        return False
     for digit in str(num):
         if not digit.isdigit():
             return False
@@ -55,6 +59,8 @@ def hex2dec(hex):
     return int(decimal)
 
 def is_hex(s):
+    if len(s) == 0 or s[0]=='-':
+        return False
     try:
         int(s, 16)
         return True
@@ -65,11 +71,12 @@ def getDecimalValFromHex(num):
     hexDict ={'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
     return(hexDict[num.upper()])
 
+    
 def main():
     exit = 0
     while exit != 1:
         try:
-            mode = int(input('This program converts binary to decimal or decimal to binary! Press the number for what conversion you would like \n 1:Bin-Dec; 2:Dec-Bin 3:Hex-dec \n'))
+            mode = int(input('This program converts binary to decimal or decimal to binary! Press the number for what conversion you would like \n 1:Bin-Dec; 2:Dec-Bin 3:Hex-dec \n NOTE: negative inputs are not accepted \n'))
         except ValueError:
             print("Not a number")
 
@@ -84,16 +91,14 @@ def main():
                     print("Not a binary number")
             elif mode == 2:
                 num_input = input("Enter your decimal whole number \n")
-                if isDecimal(num_input):
+                if isDecimal(num_input): #isDecimal checks for empty inputs
                     print(dec2bin(num_input))
                 else:
                     print("Invalid number")
             elif mode == 3:
                 num_input = input("Enter your hexidecimal number \n")
-                if len(num_input) == 0 or is_hex(num_input) is False:
+                if is_hex(num_input) is False: #is_hex checks for empty inputs
                     print("Not a hexadecimal number")
-                elif str(num_input[0]) == '-':
-                    print("Negative numbers are not supported")
                 else:
                     print(hex2dec(num_input))
 

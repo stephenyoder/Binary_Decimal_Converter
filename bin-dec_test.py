@@ -28,5 +28,50 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(bin_dec_converter.hex2dec(12345),      0x12345)
         self.assertEqual(bin_dec_converter.hex2dec(999999),     0x999999)
 
+    def test_isBinary(self):
+        self.assertFalse(bin_dec_converter.isBinary('abcdef'))
+        self.assertFalse(bin_dec_converter.isBinary('101fja'))
+        self.assertFalse(bin_dec_converter.isBinary('#@104700'))
+        self.assertTrue(bin_dec_converter.isBinary('101010101'))
+        self.assertTrue(bin_dec_converter.isBinary('000001111'))
+        self.assertTrue(bin_dec_converter.isBinary('111110000'))
+        self.assertFalse(bin_dec_converter.isBinary('1010101a'))
+        self.assertFalse(bin_dec_converter.isBinary('a101010101'))
+        self.assertFalse(bin_dec_converter.isBinary(''))
+        self.assertFalse(bin_dec_converter.isBinary('-$#@'))
+
+    def test_isDecimal(self):
+        self.assertFalse(bin_dec_converter.isDecimal('abcd'))
+        self.assertFalse(bin_dec_converter.isDecimal('101fja'))
+        self.assertFalse(bin_dec_converter.isDecimal('#@104700'))
+        self.assertTrue(bin_dec_converter.isDecimal('101010101'))
+        self.assertTrue(bin_dec_converter.isDecimal('0123456789'))
+        self.assertTrue(bin_dec_converter.isDecimal('111110000'))
+        self.assertFalse(bin_dec_converter.isDecimal('-10101'))
+        self.assertFalse(bin_dec_converter.isDecimal('a101010101'))
+        self.assertFalse(bin_dec_converter.isDecimal(''))
+        self.assertFalse(bin_dec_converter.isDecimal('$#@'))
+        self.assertFalse(bin_dec_converter.isDecimal('0.342'))
+        self.assertFalse(bin_dec_converter.isDecimal('-0.342'))
+
+    def test_is_hex(self):
+        self.assertTrue(bin_dec_converter.is_hex('abcd'))
+        self.assertFalse(bin_dec_converter.is_hex('101fja'))
+        self.assertFalse(bin_dec_converter.is_hex('#@104700'))
+        self.assertTrue(bin_dec_converter.is_hex('101010101'))
+        self.assertTrue(bin_dec_converter.is_hex('0123456789'))
+        self.assertTrue(bin_dec_converter.is_hex('111110000'))
+        self.assertTrue(bin_dec_converter.is_hex('abcdef1234567890'))
+        self.assertFalse(bin_dec_converter.is_hex('abcdefg1234570'))
+        self.assertTrue(bin_dec_converter.is_hex('f00fbabe'))
+        self.assertFalse(bin_dec_converter.is_hex('-10101'))
+        self.assertTrue(bin_dec_converter.is_hex('deadbeef'))
+        self.assertFalse(bin_dec_converter.is_hex(''))
+        self.assertFalse(bin_dec_converter.is_hex('$#@'))
+        self.assertFalse(bin_dec_converter.is_hex('0.342'))
+        self.assertFalse(bin_dec_converter.is_hex('-0.342'))
+        self.assertFalse(bin_dec_converter.is_hex('-f00fbabe'))
+
+
 if __name__ == '__main__':
     unittest.main()
